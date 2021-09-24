@@ -1,0 +1,15 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+// Bootstrap
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+// Variables
+
+$font-stack: Nunito, sans-serif;
+
+body {
+    font: 100% $font-stack;
+}
