@@ -25,7 +25,7 @@ class CompanyFactory extends Factory
         return [
             'name' => $this->faker->company(),
             'branch' => $this->faker->randomElement($array = array ('IT','Marketing','Construction')),
-            'users' => array_fill(10, 1, 1)
+            'users' => json_encode([10, 1, 1])
         ];
     }
 }

@@ -26,7 +26,7 @@ class UserFactory extends Factory
             'firstName' => $this->faker->firstName(),
             'lastName' => $this->faker->lastName(),
             'contact_email' => $this->faker->unique()->safeEmail(),
-            'companies' => array_fill(10, 1, 1)
+            'companies' => json_encode([10, 1, 1])
         ];
     }
 }

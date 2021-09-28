@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// View Routes
+
 Route::get('/', function () {
     return view('index');
-});
-
-Route::get('/beta', function() {
-    return view('beta');
 });
