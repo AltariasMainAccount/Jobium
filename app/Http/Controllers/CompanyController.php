@@ -11,7 +11,7 @@ class CompanyController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request) {
         return Company::all();
     }
 
@@ -31,7 +31,7 @@ class CompanyController extends Controller {
      * @param id $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show(Request $request, $id) {
         return Company::find($id);
     }
 
@@ -55,7 +55,7 @@ class CompanyController extends Controller {
      * @param  id $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy(Request $request, $id) {
         $company = Company::findOrFail($id); // try to find the Company by id, fail if not found
         $company->delete(); // delete the Company
 

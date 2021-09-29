@@ -9,6 +9,13 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user, $ability)
+    {
+        if ($user->tokenCan('admin')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -17,7 +24,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return ($user->tokenCan('user:view') || $user->tokenCan('user:update') || $user->tokenCan('user:create') || $user->tokenCan('user:all'));
     }
 
     /**
@@ -29,7 +36,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        //
+        return ($user->tokenCan('user:view') || $user->tokenCan('user:update') || $user->tokenCan('user:create') || $user->tokenCan('user:all'));
     }
 
     /**
@@ -40,7 +47,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->tokenCan('user:all') || $user->tokenCan('admin'); // The user cannot create users on their own unless their token has the user:all permission, it can be done using the register form
     }
 
     /**
@@ -52,7 +59,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return ($user->id === $model->id && ($user->tokenCan('user:update') || $user->tokenCan('user:create') || $user->tokenCan('user:all'))); // The user can only update their own model, even with the all permission on their token.
     }
 
     /**
@@ -64,7 +71,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return ($user->id === $model->id && $user->tokenCan('user:all'));
     }
 
     /**
@@ -76,7 +83,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        //
+        return ($user->id === $model->id && $user->tokenCan('user:all'));
     }
 
     /**
@@ -88,6 +95,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        //
+        return ($user->id === $model->id && $user->tokenCan('user:all'));
     }
 }

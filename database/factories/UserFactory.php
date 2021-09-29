@@ -23,10 +23,10 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'firstName' => $this->faker->firstName(),
-            'lastName' => $this->faker->lastName(),
-            'contact_email' => $this->faker->unique()->safeEmail(),
-            'companies' => json_encode([10, 1, 1])
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'password' => $this->faker->password(),
+            'companies' => json_encode([10, 1, 1]),
         ];
     }
 }

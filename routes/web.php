@@ -18,4 +18,16 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('/');
+
+Route::get('dashboard', function () {
+    return view('dashboard');
+})->name('dashboard')->middleware('auth:sanctum');
+
+Route::get('login', function () {
+    return view('login');
+})->name('login');
+
+Route::get('register', function () {
+    return view('register');
+})->name('register');

@@ -10,14 +10,22 @@ class CompanyPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user, $ability)
+    {
+        if ($user->tokenCan('admin')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user) {
-        return $user->id === $company->user_id;
+    public function viewAny(User $user)
+    {
+        return ($user->tokenCan('company:view') || $user->tokenCan('company:update') || $user->tokenCan('company:create') || $user->tokenCan('company:all'));
     }
 
     /**
@@ -27,8 +35,9 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Company $company) {
-        //
+    public function view(User $user, Company $company)
+    {
+        return ($user->tokenCan('company:view') || $user->tokenCan('company:update') || $user->tokenCan('company:create') || $user->tokenCan('company:all'));
     }
 
     /**
@@ -37,8 +46,9 @@ class CompanyPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user) {
-        return $user->id === $company->user_id;
+    public function create(User $user)
+    {
+        return ($user->tokenCan('company:create') || $user->tokenCan('company:all'));
     }
 
     /**
@@ -48,8 +58,9 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Company $company) {
-        return $user->id === $company->user_id;
+    public function update(User $user, Company $company)
+    {
+        return (in_array($user->id, $company->users) && ($user->tokenCan('company:update') || $user->tokenCan('company:create') || $user->tokenCan('company:all')));
     }
 
     /**
@@ -59,8 +70,9 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Company $company) {
-        return $user->id === $company->user_id;
+    public function delete(User $user, Company $company)
+    {
+        return (in_array($user->id, $company->users) && $user->tokenCan('company:all'));
     }
 
     /**
@@ -70,8 +82,9 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Company $company) {
-        return $user->id === $company->user_id;
+    public function restore(User $user, Company $company)
+    {
+        return (in_array($user->id, $company->users) && $user->tokenCan('company:all'));
     }
 
     /**
@@ -81,7 +94,8 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Company $company) {
-        return $user->id === $company->user_id;
+    public function forceDelete(User $user, Company $company)
+    {
+        return (in_array($user->id, $company->users) && $user->tokenCan('company:all'));
     }
 }

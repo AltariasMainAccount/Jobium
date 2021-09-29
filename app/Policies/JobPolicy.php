@@ -9,7 +9,14 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class JobPolicy
 {
     use HandlesAuthorization;
-
+    
+    public function before(User $user, $ability)
+    {
+        if ($user->tokenCan('admin')) {
+            return true;
+        }
+    }
+    
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +25,7 @@ class JobPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return ($user->tokenCan('job:view') || $user->tokenCan('job:update') || $user->tokenCan('job:create') || $user->tokenCan('job:all'));
     }
 
     /**
@@ -30,7 +37,7 @@ class JobPolicy
      */
     public function view(User $user, Job $job)
     {
-        //
+        return ($user->tokenCan('job:view') || $user->tokenCan('job:update') || $user->tokenCan('job:create') || $user->tokenCan('job:all'));
     }
 
     /**
@@ -41,7 +48,7 @@ class JobPolicy
      */
     public function create(User $user)
     {
-        //
+        return ($user->tokenCan('job:create') || $user->tokenCan('job:all'));
     }
 
     /**
@@ -53,7 +60,7 @@ class JobPolicy
      */
     public function update(User $user, Job $job)
     {
-        //
+        return ($user->tokenCan('job:update') || $user->tokenCan('job:create') || $user->tokenCan('job:all'));
     }
 
     /**
@@ -65,7 +72,7 @@ class JobPolicy
      */
     public function delete(User $user, Job $job)
     {
-        //
+        return $user->tokenCan('job:all');
     }
 
     /**
@@ -77,7 +84,7 @@ class JobPolicy
      */
     public function restore(User $user, Job $job)
     {
-        //
+        return $user->tokenCan('job:all');
     }
 
     /**
@@ -89,6 +96,6 @@ class JobPolicy
      */
     public function forceDelete(User $user, Job $job)
     {
-        //
+        return $user->tokenCan('job:all');
     }
 }
