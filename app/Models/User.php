@@ -21,15 +21,28 @@ class User extends Authenticatable
     // Disabling timestamping
     public $timestamps = false;
 
-    // Fillable content - Content in the DB that is mass assignable
     protected $fillable = [
-        'firstName',
-        'lastName',
-        'contact_email',
+        'name',
+        'email',
+        'password',
         'companies'
     ];
 
-    // Casting companies from json to array // Working around SQLITE not having arrays
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'companies' => 'array'
     ];

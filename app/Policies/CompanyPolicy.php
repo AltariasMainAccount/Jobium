@@ -16,9 +16,8 @@ class CompanyPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
-    {
-        //
+    public function viewAny(User $user) {
+        return $user->id === $company->user_id;
     }
 
     /**
@@ -28,8 +27,7 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Company $company)
-    {
+    public function view(User $user, Company $company) {
         //
     }
 
@@ -39,9 +37,8 @@ class CompanyPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
-    {
-        //
+    public function create(User $user) {
+        return $user->id === $company->user_id;
     }
 
     /**
@@ -51,9 +48,8 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Company $company)
-    {
-        //
+    public function update(User $user, Company $company) {
+        return $user->id === $company->user_id;
     }
 
     /**
@@ -63,9 +59,8 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Company $company)
-    {
-        //
+    public function delete(User $user, Company $company) {
+        return $user->id === $company->user_id;
     }
 
     /**
@@ -75,9 +70,8 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Company $company)
-    {
-        //
+    public function restore(User $user, Company $company) {
+        return $user->id === $company->user_id;
     }
 
     /**
@@ -87,8 +81,7 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Company $company)
-    {
-        //
+    public function forceDelete(User $user, Company $company) {
+        return $user->id === $company->user_id;
     }
 }
