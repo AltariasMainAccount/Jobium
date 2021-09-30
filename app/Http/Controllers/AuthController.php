@@ -31,7 +31,13 @@ class AuthController extends Controller {
             'token' => $token
         ];
 
-        return response($response, 201);
+        if ($request->expectsJson()) {
+            return response($response, 201);
+        }
+
+        if ($request->accepts(['text/html'])) {
+            return redirect()->route('home');
+        }
     }
 
     // Login Function
@@ -56,13 +62,26 @@ class AuthController extends Controller {
             'token' => $token
         ];
 
-        return response($response, 201);
+        if ($request->expectsJson()) {
+            return response($response, 201);
+        }
+
+        if ($request->accepts(['text/html'])) {
+            return view('dashboard', ['token' => $token]);
+        }
     }
 
     // signout function
     public function logout(Request $request) {
         auth()->user()->tokens()->delete();
-        return ['message' => 'Logged out'];
+        
+        if ($request->expectsJson()) {
+            return ['message' => 'Logged out'];
+        }
+
+        if ($request->accepts(['text/html'])) {
+            return redirect()->route('home');
+        }
     }
 
     // checkMyself function

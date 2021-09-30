@@ -18,7 +18,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('index');
-})->name('/');
+})->name('home');
 
 Route::get('dashboard', function () {
     return view('dashboard');
