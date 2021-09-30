@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 
+private function checkPerms($perms, $class) {
+    return $this->authorize($perms, $class);
+}
+
 class CompanyController extends Controller {
     /**
      * Display a listing of the resource.
@@ -12,6 +16,10 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
+        if (!checkPerms('viewAny', Company::class)) {
+            abort(403);
+        }
+        
         return Company::all();
     }
 
@@ -22,6 +30,10 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+        if (!checkPerms('create', Company::class)) {
+            abort(403);
+        }
+        
         return Company::create($request->all());
     }
 
@@ -32,6 +44,10 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $id) {
+        if (!checkPerms('view', Company::class)) {
+            abort(403);
+        }
+        
         return Company::find($id);
     }
 
@@ -43,6 +59,10 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
+        if (!checkPerms('update', Company::class)) { 
+            abort(403);
+        }
+        
         $company = Company::findOrFail($id); // try to find the Company by id, fail if not found
         $company->update($request->all()); // update the Company with the request data
 
@@ -56,6 +76,10 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id) {
+        if (!checkPerms('delete', Company::class)) { 
+            abort(403);
+        }
+        
         $company = Company::findOrFail($id); // try to find the Company by id, fail if not found
         $company->delete(); // delete the Company
 

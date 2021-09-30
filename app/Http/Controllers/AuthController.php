@@ -23,8 +23,6 @@ class AuthController extends Controller {
             'companies' => '[1, 2, 3]'
         ]);
 
-        $token = $user->createToken('auth_token', ['user:view', 'company:view', 'job:view'])->plainTextToken;
-
         return response()->view('index');
     }
 

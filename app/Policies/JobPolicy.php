@@ -10,7 +10,7 @@ class JobPolicy
 {
     use HandlesAuthorization;
     
-    public function before(User $user, $ability)
+    public function before(User $user)
     {
         if ($user->tokenCan('admin')) {
             return true;
