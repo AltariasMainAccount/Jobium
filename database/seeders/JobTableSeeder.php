@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use App\Models\Job;
+use App\Models\Company;
 
 class JobTableSeeder extends Seeder
 {
@@ -15,6 +16,8 @@ class JobTableSeeder extends Seeder
      */
     public function run()
     {
-        Job::factory()->count(10)->create();
+        Job::factory()->count(10)->create([
+            'company_id' => Company::inRandomOrder()->take(1)->pluck('id'),
+        ]);
     }
 }

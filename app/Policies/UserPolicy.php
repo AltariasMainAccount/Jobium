@@ -47,7 +47,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->tokenCan('user:all') || $user->tokenCan('admin'); // The user cannot create users on their own unless their token has the user:all permission, it can be done using the register form
+        return $user->tokenCan('user:all'); // The user cannot create users on their own unless their token has the user:all permission, it can be done using the register form
     }
 
     /**

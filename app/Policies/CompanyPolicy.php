@@ -10,6 +10,19 @@ class CompanyPolicy
 {
     use HandlesAuthorization;
 
+    private function isPartOfCompany(User $user, Company $company) {
+        $array = unserialize($company->users);
+        $found = false;
+
+        foreach ($array as &$value) {
+            if ($value == $user->id) {
+                $found = true;
+            };
+        }
+
+        return $found;
+    }
+
     public function before(User $user)
     {
         if ($user->tokenCan('admin')) {
@@ -60,7 +73,7 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company)
     {
-        return (in_array($user->id, $company->users) && ($user->tokenCan('company:update') || $user->tokenCan('company:create') || $user->tokenCan('company:all')));
+        return ($user->tokenCan('company:update') || $user->tokenCan('company:create') || $user->tokenCan('company:all'));
     }
 
     /**
@@ -72,7 +85,7 @@ class CompanyPolicy
      */
     public function delete(User $user, Company $company)
     {
-        return (in_array($user->id, $company->users) && $user->tokenCan('company:all'));
+        return $user->tokenCan('company:all');
     }
 
     /**
@@ -84,7 +97,7 @@ class CompanyPolicy
      */
     public function restore(User $user, Company $company)
     {
-        return (in_array($user->id, $company->users) && $user->tokenCan('company:all'));
+        return $user->tokenCan('company:all');
     }
 
     /**
@@ -96,6 +109,6 @@ class CompanyPolicy
      */
     public function forceDelete(User $user, Company $company)
     {
-        return (in_array($user->id, $company->users) && $user->tokenCan('company:all'));
+        return $user->tokenCan('company:all');
     }
 }

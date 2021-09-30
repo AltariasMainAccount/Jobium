@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use Illuminate\Http\Request;
 
-private function checkPerms($perms, $class) {
-    return $this->authorize($perms, $class);
-}
-
 class JobController extends Controller {
+    private function checkPerms($perms, $class) {
+        return $this->authorize($perms, $class);
+    }
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        if (!checkPerms('viewAny', Job::class)) {
+        if (!$this->checkPerms('viewAny', Job::class)) {
             abort(403);
         }
         
@@ -30,7 +30,7 @@ class JobController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        if (!checkPerms('create', Job::class)) {
+        if (!$this->checkPerms('create', Job::class)) {
             abort(403);
         }
         
@@ -44,7 +44,7 @@ class JobController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        if (!checkPerms('view', Job::class)) {
+        if (!$this->checkPerms('view', Job::class)) {
             abort(403);
         }
         
@@ -59,7 +59,7 @@ class JobController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        if (!checkPerms('update', Job::class)) {
+        if (!$this->checkPerms('update', Job::class)) {
             abort(403);
         }
         
@@ -76,7 +76,7 @@ class JobController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        if (!checkPerms('delete', Job::class)) {
+        if (!$this->checkPerms('delete', Job::class)) {
             abort(403);
         }
         

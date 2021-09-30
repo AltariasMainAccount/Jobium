@@ -5,22 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 
-private function checkPerms($perms, $class) {
-    return $this->authorize($perms, $class);
-}
-
 class CompanyController extends Controller {
+    // Check the permissions
+    private function checkPerms($perms, $class) {
+        return $this->authorize($perms, $class);
+    }
+
     /**
-     * Display a listing of the resource.
+    * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        if (!checkPerms('viewAny', Company::class)) {
+        if (!$this->checkPerms('viewAny', Company::class)) {
             abort(403);
         }
         
-        return Company::all();
+        return Company::with('users')->get();
     }
 
     /**
@@ -30,7 +31,7 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        if (!checkPerms('create', Company::class)) {
+        if (!$this->checkPerms('create', Company::class)) {
             abort(403);
         }
         
@@ -44,11 +45,15 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $id) {
-        if (!checkPerms('view', Company::class)) {
+        $company = Company::where('id', $id)->with('users')->first();
+        
+        if (!$this->checkPerms('view', $company)) {
             abort(403);
         }
         
-        return Company::find($id);
+        return response([
+            $company
+        ], 200);
     }
 
     /**
@@ -59,11 +64,12 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        if (!checkPerms('update', Company::class)) { 
+        $company = Company::findOrFail($id); // try to find the Company by id, fail if not found
+        
+        if (!$this->checkPerms('update', $company)) { 
             abort(403);
         }
-        
-        $company = Company::findOrFail($id); // try to find the Company by id, fail if not found
+
         $company->update($request->all()); // update the Company with the request data
 
         return $company; // return the Company
@@ -76,11 +82,12 @@ class CompanyController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id) {
-        if (!checkPerms('delete', Company::class)) { 
+        $company = Company::findOrFail($id); // try to find the Company by id, fail if not found
+        
+        if (!$this->checkPerms('delete', $company)) { 
             abort(403);
         }
         
-        $company = Company::findOrFail($id); // try to find the Company by id, fail if not found
         $company->delete(); // delete the Company
 
         return 204; // return HTML response code 204

@@ -13,7 +13,7 @@ class Job extends Model
     protected $table = 'jobs';
 
     // The Primary Key
-    protected $primaryKey = 'job_id';
+    protected $primaryKey = 'id';
 
     // Disabling timestamping
     public $timestamps = false;

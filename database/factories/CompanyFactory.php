@@ -15,6 +15,10 @@ class CompanyFactory extends Factory
      */
     protected $model = Company::class;
 
+    private function storeArray(...$val) {
+        return serialize($val);
+    }
+
     /**
      * Define the model's default state.
      *
@@ -24,8 +28,7 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
-            'branch' => $this->faker->randomElement($array = array ('IT','Marketing','Construction')),
-            'users' => json_encode([10, 1, 1])
+            'branch' => $this->faker->randomElement($array = array ('IT','Marketing','Construction'))
         ];
     }
 }

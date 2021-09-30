@@ -24,10 +24,10 @@ Route::get('dashboard', function () {
     return view('dashboard');
 })->name('dashboard')->middleware('auth:sanctum');
 
-Route::get('login', function () {
+Route::get('login-page', function () {
     return view('login');
-})->name('login');
+})->name('login-page');
 
-Route::get('register', function () {
+Route::get('register-page', function () {
     return view('register');
-})->name('register');
+})->name('register-page');

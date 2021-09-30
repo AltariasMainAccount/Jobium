@@ -13,7 +13,7 @@ class Company extends Model
     protected $table = 'companies';
 
     // The Primary Key
-    protected $primaryKey = 'company_id';
+    protected $primaryKey = 'id';
 
     // Disabling timestamping
     public $timestamps = false;
@@ -23,15 +23,11 @@ class Company extends Model
         'branch',
     ];
 
-    protected $casts = [
-        'users' => 'array'
-    ];
-
     public function jobs() {
         return $this->hasMany(Job::class);
     }
 
     public function users() {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class, 'company_user', 'company_id', 'user_id');
     }
 }

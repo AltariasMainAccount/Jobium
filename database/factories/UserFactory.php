@@ -15,6 +15,10 @@ class UserFactory extends Factory
      */
     protected $model = User::class;
 
+    private function storeArray(...$val) {
+        return serialize($val);
+    }
+
     /**
      * Define the model's default state.
      *
@@ -25,8 +29,7 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'password' => $this->faker->password(),
-            'companies' => json_encode([10, 1, 1]),
+            'password' => $this->faker->password()
         ];
     }
 }

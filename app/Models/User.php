@@ -17,7 +17,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     // The Primary Key
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'id';
 
     // Disabling timestamping
     public $timestamps = false;
@@ -26,8 +26,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'companies',
-        'hasApiAccess'
     ];
 
     /**
@@ -38,22 +36,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'api_token'
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'companies' => 'array'
     ];
 
     // Relations to other models
 
     public function companies() {
-        return $this->hasMany(Company::class);
+        return $this->belongsToMany(Company::class, 'company_user', 'user_id', 'company_id');
     }
 
 }
