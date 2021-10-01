@@ -20,8 +20,7 @@ class JobFactory extends Factory
      *
      * @return array
      */
-    public function definition()
-    {
+    public function definition() {
         return [
             'name' => $this->faker->jobTitle(),
             'company_id' => $this->faker->randomDigitNotNull()

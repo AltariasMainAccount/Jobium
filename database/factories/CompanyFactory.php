@@ -15,17 +15,12 @@ class CompanyFactory extends Factory
      */
     protected $model = Company::class;
 
-    private function storeArray(...$val) {
-        return serialize($val);
-    }
-
     /**
      * Define the model's default state.
      *
      * @return array
      */
-    public function definition()
-    {
+    public function definition() {
         return [
             'name' => $this->faker->company(),
             'branch' => $this->faker->randomElement($array = array ('IT','Marketing','Construction'))

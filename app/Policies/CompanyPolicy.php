@@ -10,21 +10,23 @@ class CompanyPolicy
 {
     use HandlesAuthorization;
 
-    private function isPartOfCompany(User $user, Company $company) {
-        $array = unserialize($company->users);
-        $found = false;
+    /* Was intended to be used, ended up not getting used due to problems with the policies getting slower no matter if I checked using foreach or using in_array
+    *    private function isPartOfCompany(User $user, Company $company) {
+    *        $array = unserialize($company->users);
+    *        $found = false;
+    *
+    *        foreach ($array as &$value) {
+    *            if ($value == $user->id) {
+    *                $found = true;
+    *            };
+    *        }
+    *
+    *        return $found;
+    *    }
+    */
+    
 
-        foreach ($array as &$value) {
-            if ($value == $user->id) {
-                $found = true;
-            };
-        }
-
-        return $found;
-    }
-
-    public function before(User $user)
-    {
+    public function before(User $user) {
         if ($user->tokenCan('admin')) {
             return true;
         }
@@ -36,8 +38,7 @@ class CompanyPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
-    {
+    public function viewAny(User $user) {
         return ($user->tokenCan('company:view') || $user->tokenCan('company:update') || $user->tokenCan('company:create') || $user->tokenCan('company:all'));
     }
 
@@ -48,8 +49,7 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Company $company)
-    {
+    public function view(User $user, Company $company) {
         return ($user->tokenCan('company:view') || $user->tokenCan('company:update') || $user->tokenCan('company:create') || $user->tokenCan('company:all'));
     }
 
@@ -59,8 +59,7 @@ class CompanyPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
-    {
+    public function create(User $user) {
         return ($user->tokenCan('company:create') || $user->tokenCan('company:all'));
     }
 
@@ -71,8 +70,7 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Company $company)
-    {
+    public function update(User $user, Company $company) {
         return ($user->tokenCan('company:update') || $user->tokenCan('company:create') || $user->tokenCan('company:all'));
     }
 
@@ -83,8 +81,7 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Company $company)
-    {
+    public function delete(User $user, Company $company) {
         return $user->tokenCan('company:all');
     }
 
@@ -95,8 +92,7 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Company $company)
-    {
+    public function restore(User $user, Company $company) {
         return $user->tokenCan('company:all');
     }
 
@@ -107,8 +103,7 @@ class CompanyPolicy
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Company $company)
-    {
+    public function forceDelete(User $user, Company $company) {
         return $user->tokenCan('company:all');
     }
 }

@@ -10,8 +10,7 @@ class JobPolicy
 {
     use HandlesAuthorization;
     
-    public function before(User $user)
-    {
+    public function before(User $user) {
         if ($user->tokenCan('admin')) {
             return true;
         }
@@ -23,8 +22,7 @@ class JobPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
-    {
+    public function viewAny(User $user) {
         return ($user->tokenCan('job:view') || $user->tokenCan('job:update') || $user->tokenCan('job:create') || $user->tokenCan('job:all'));
     }
 
@@ -35,8 +33,7 @@ class JobPolicy
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Job $job)
-    {
+    public function view(User $user, Job $job) {
         return ($user->tokenCan('job:view') || $user->tokenCan('job:update') || $user->tokenCan('job:create') || $user->tokenCan('job:all'));
     }
 
@@ -46,8 +43,7 @@ class JobPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
-    {
+    public function create(User $user) {
         return ($user->tokenCan('job:create') || $user->tokenCan('job:all'));
     }
 
@@ -58,8 +54,7 @@ class JobPolicy
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Job $job)
-    {
+    public function update(User $user, Job $job) {
         return ($user->tokenCan('job:update') || $user->tokenCan('job:create') || $user->tokenCan('job:all'));
     }
 
@@ -70,8 +65,7 @@ class JobPolicy
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Job $job)
-    {
+    public function delete(User $user, Job $job) {
         return $user->tokenCan('job:all');
     }
 
@@ -82,8 +76,7 @@ class JobPolicy
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Job $job)
-    {
+    public function restore(User $user, Job $job) {
         return $user->tokenCan('job:all');
     }
 
@@ -94,8 +87,7 @@ class JobPolicy
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Job $job)
-    {
+    public function forceDelete(User $user, Job $job) {
         return $user->tokenCan('job:all');
     }
 }

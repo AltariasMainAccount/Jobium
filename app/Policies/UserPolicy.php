@@ -9,8 +9,7 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user)
-    {
+    public function before(User $user) {
         if ($user->tokenCan('admin')) {
             return true;
         }
@@ -22,8 +21,7 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
-    {
+    public function viewAny(User $user) {
         return ($user->tokenCan('user:view') || $user->tokenCan('user:update') || $user->tokenCan('user:create') || $user->tokenCan('user:all'));
     }
 
@@ -34,8 +32,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, User $model)
-    {
+    public function view(User $user, User $model) {
         return ($user->tokenCan('user:view') || $user->tokenCan('user:update') || $user->tokenCan('user:create') || $user->tokenCan('user:all'));
     }
 
@@ -45,8 +42,7 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
-    {
+    public function create(User $user) {
         return $user->tokenCan('user:all'); // The user cannot create users on their own unless their token has the user:all permission, it can be done using the register form
     }
 
@@ -57,8 +53,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
-    {
+    public function update(User $user, User $model) {
         return ($user->id === $model->id && ($user->tokenCan('user:update') || $user->tokenCan('user:create') || $user->tokenCan('user:all'))); // The user can only update their own model, even with the all permission on their token.
     }
 
@@ -69,8 +64,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
-    {
+    public function delete(User $user, User $model) {
         return ($user->id === $model->id && $user->tokenCan('user:all'));
     }
 
@@ -81,8 +75,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, User $model)
-    {
+    public function restore(User $user, User $model) {
         return ($user->id === $model->id && $user->tokenCan('user:all'));
     }
 
@@ -93,8 +86,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, User $model)
-    {
+    public function forceDelete(User $user, User $model) {
         return ($user->id === $model->id && $user->tokenCan('user:all'));
     }
 }
