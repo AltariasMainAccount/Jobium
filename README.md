@@ -2,7 +2,7 @@
 
 ## Description
 This was supposed to be a full on website for managing job listings but since it was bigger than I expected it is mostly backend with little to no frontend.
-It uses Laravel 8.9 (the latest version), with SCSS and Bootstrap 4.
+It uses Laravel 8.16.1 (the latest stable version), with SCSS (Sass Compilation) and Bootstrap 4 (in form of an NPM Module, not imported into the html files).
 
 ## API Authorization
 
