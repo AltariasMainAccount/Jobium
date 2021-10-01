@@ -49,7 +49,7 @@ Since there is migrations set up, you can also use other database systems (for e
 
 ## Routes
 Retrieved from php artisan route:list
-
+```
 +--------+-----------+----------------------------+-----------------+------------------------------------------------------------+------------------------------------------+
 | Domain | Method    | URI                        | Name            | Action                                                     | Middleware                               |
 +--------+-----------+----------------------------+-----------------+------------------------------------------------------------+------------------------------------------+
@@ -112,6 +112,7 @@ Retrieved from php artisan route:list
 |        | GET|HEAD  | register-page              | register-page   | Closure                                                    | web                                      |
 |        | GET|HEAD  | sanctum/csrf-cookie        |                 | Laravel\Sanctum\Http\Controllers\CsrfCookieController@show | web                                      |
 +--------+-----------+----------------------------+-----------------+------------------------------------------------------------+------------------------------------------+
+```
 
 ## Tests
 
